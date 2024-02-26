@@ -13,7 +13,7 @@ function Play(licences) {
 
     let deck = [];
 
-    console.log(licences.licences);
+    // TODO chercher erreur imbrication
     licences.licences.forEach(licence => {
         licence.cartes.forEach(carte => deck.push(carte));
     });
