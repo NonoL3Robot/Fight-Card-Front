@@ -1,54 +1,70 @@
+import React from "react";
 import { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import { Card } from "../Card";
 
 function Play(licences) {
+  const rounds = 10;
 
-    const rounds = 10;
-
-    const shuffleArray = array => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
     }
+  };
 
-    let deck = [];
+  let deck = [];
 
-    // TODO chercher erreur imbrication
-    licences.licences.forEach(licence => {
-        licence.cartes.forEach(carte => deck.push(carte));
-    });
-    shuffleArray(deck);
-    console.log(deck);
+  licences.licences.forEach((licence) => {
+    licence.cartes.forEach((carte) => deck.push(carte));
+  });
+  shuffleArray(deck);
+  console.log(deck);
 
-    /* Distribution aléatoire à partir de allCards ? */
-    let [playerDeck, setPlayerDeck] = useState(deck.slice(0, 10));
-    let [compDeck, setCompDeck] = useState(deck.slice(10, 20));
+  /* Distribution aléatoire à partir de allCards ? */
+  let [playerDeck, setPlayerDeck] = useState(deck.slice(0, 10));
+  let [compDeck, setCompDeck] = useState(deck.slice(10, 20));
 
-    console.log("playerDeck", playerDeck);
-    console.log("compDeck", compDeck);
+  console.log("playerDeck", playerDeck);
+  console.log("compDeck", compDeck);
 
-    return (
-        <>
-        {playerDeck.map(card =>
-            <div
-                key={card.id}
-            >
-                <Card card={card} />
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  return (
+    <>
+      <div>
+        <h2>Player Deck</h2>
+        <Slider {...settings}>
+          {playerDeck.map((card) => (
+            <div key={card.id}>
+              <Card card={card} />
             </div>
-        )}
-        <br/>
-        {compDeck.map(card =>
-            <div
-            key={card.id}
-            >
-                <Card card={card} />
+          ))}
+        </Slider>
+      </div>
+      <br />
+      <div>
+        <h2>Computer Deck</h2>
+        <Slider {...settings}>
+          {compDeck.map((card) => (
+            <div key={card.id}>
+              <Card card={card} />
             </div>
-        )}
-        </>
-    )
+          ))}
+        </Slider>
+      </div>
+    </>
+  );
 }
 
-export default Play
+export default Play;
