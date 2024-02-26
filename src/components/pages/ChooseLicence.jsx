@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import ApiService from "../service/ApiService";
+import { useNavigate } from "react-router-dom";
 
 function ChooseLicence({ choosedLicences, setChoosedLicences }) {
+
+    const navigate = useNavigate();
 
     const api = new ApiService("http://localhost:8080/api/v1/licences");
     const [licences, setLicences] = useState([]);
@@ -22,7 +25,7 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
     }
 
     const handleConfirm = () => {
-        console.log("Licences sélectionnées : ", choosedLicences);
+        navigate('/play');
     }
 
     return (
@@ -32,7 +35,6 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
                     key={licence.id}
                     onClick={() => { handleClick(licence) }}
                     style={choosedLicences.includes(licence) ? { color: 'red' } : {}}
-
                 >
                     {licence.name}
                 </div>
@@ -41,7 +43,9 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
             className="btn button" 
             onClick={handleConfirm} 
             disabled={choosedLicences.length < 2}
-            href={"/play"}>OK</button>
+            >
+                OK
+            </button>
         </>
     )
 }
