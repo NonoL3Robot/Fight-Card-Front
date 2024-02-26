@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Play(licences) {
 
     const rounds = 10;
@@ -21,12 +23,29 @@ function Play(licences) {
     console.log(deck);
 
     /* Distribution aléatoire à partir de allCards ? */
-    let [playerDeck, setPlayerDeck] = useState([]);
-    let [compDeck, setCompDeck] = useState([]);
+    let [playerDeck, setPlayerDeck] = useState(deck.slice(0, 10));
+    let [compDeck, setCompDeck] = useState(deck.slice(10, 20));
+
+    console.log("playerDeck", playerDeck);
+    console.log("compDeck", compDeck);
 
     return (
         <>
-
+        {playerDeck.map(card =>
+            <div
+                key={card.id}
+            >
+                {card.name}
+            </div>
+        )}
+        <br/>
+        {compDeck.map(card =>
+            <div
+            key={card.id}
+            >
+                {card.name}
+            </div>
+        )}
         </>
     )
 }

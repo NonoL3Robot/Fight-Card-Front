@@ -39,10 +39,10 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
                     {licence.name}
                 </div>
             )}
-            <button 
-            className="btn button" 
-            onClick={handleConfirm} 
-            disabled={choosedLicences.length < 2}
+            <button
+                className="btn button"
+                onClick={handleConfirm}
+                disabled={choosedLicences.length < 2}
             >
                 OK
             </button>
