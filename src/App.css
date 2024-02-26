@@ -1,0 +1,26 @@
+/* Add the following styles to your CSS file or component */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #07598f;
+  }
+  
+  .pagination button.active {
+    background-color: #07598f;
+  }
+  
