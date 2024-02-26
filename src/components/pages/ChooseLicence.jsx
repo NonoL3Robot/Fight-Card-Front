@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ApiService from "../service/ApiService";
 import { useNavigate } from "react-router-dom";
+import { LicenceCard } from "../LicenceCard";
 
 function ChooseLicence({ choosedLicences, setChoosedLicences }) {
 
@@ -36,7 +37,7 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
                     onClick={() => { handleClick(licence) }}
                     style={choosedLicences.includes(licence) ? { color: 'red' } : {}}
                 >
-                    {licence.name}
+                    <LicenceCard licence={licence} />
                 </div>
             )}
             <button

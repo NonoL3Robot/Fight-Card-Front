@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Card } from "../Card";
 
 function Play(licences) {
 
@@ -35,7 +36,7 @@ function Play(licences) {
             <div
                 key={card.id}
             >
-                {card.name}
+                <Card card={card} />
             </div>
         )}
         <br/>
@@ -43,7 +44,7 @@ function Play(licences) {
             <div
             key={card.id}
             >
-                {card.name}
+                <Card card={card} />
             </div>
         )}
         </>
