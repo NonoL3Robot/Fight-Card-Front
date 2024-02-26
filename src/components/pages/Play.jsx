@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Card } from "../Card";
+import ReactModal from "react-modal";
 
 function Play(licences) {
 
     const rounds = 10;
+    const statsList = ["Courage", "Intelligence", "Force"];
 
     const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -12,6 +14,25 @@ function Play(licences) {
             array[i] = array[j];
             array[j] = temp;
         }
+    }
+
+    const [isModalOpen, setModalOpen] = useState(true);
+    ReactModal.setAppElement('#root');
+    
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+
+    const openModal = () => {
+        setModalOpen(true)
+    }
+
+    const [stat, setStat] = useState('');
+
+    const handleStat = (e, elem) => {
+        e.preventDefault;
+        setStat(elem);
+        closeModal();
     }
 
     let deck = [];
@@ -42,11 +63,28 @@ function Play(licences) {
         <br/>
         {compDeck.map(card =>
             <div
-            key={card.id}
+                key={card.id}
             >
                 <Card card={card} />
             </div>
         )}
+        <br/>
+        {`Stat sélectionnée : ${stat}`}
+
+        <ReactModal
+            isOpen={isModalOpen}
+            className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
+        >
+            <p>Choisissez la stat : </p>
+            {statsList.map(elem => 
+                <div 
+                    key={elem} 
+                    onClick={(e) => handleStat(e, elem)}
+                >
+                    {elem}
+                </div>
+            )}
+        </ReactModal>
         </>
     )
 }
