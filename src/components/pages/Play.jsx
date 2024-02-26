@@ -1,4 +1,4 @@
-function Play() {
+function Play(licences) {
  
     const rounds = 10;
 
@@ -13,12 +13,11 @@ function Play() {
 
     let deck = [];
 
-    useEffect(() => {
-        licences[0].cartes.forEach(carte => deck.push(carte));
-        licences[1].cartes.forEach(carte => deck.push(carte));
-        shuffleArray(deck);
-        console.log(deck);
-    }, [licences]);
+    licences.forEach(licence => {
+        licence.cartes.forEach(carte => deck.push(carte));
+    });
+    shuffleArray(deck);
+    console.log(deck);
 
     /* Distribution aléatoire à partir de allCards ? */
     let [playerDeck, setPlayerDeck] = useState([]);
@@ -26,7 +25,7 @@ function Play() {
 
     return(
         <>
-
+          
         </>
     )
 }

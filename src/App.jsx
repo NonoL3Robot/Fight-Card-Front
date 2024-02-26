@@ -4,7 +4,8 @@ import NavBar from './components/NavBar'
 import Licences from './components/pages/Licences'
 import Cartes from './components/pages/Cartes'
 import ChooseLicence from './components/pages/ChooseLicence'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Play from './components/pages/Play'
 
 function App() {
 
@@ -15,18 +16,13 @@ function App() {
       <NavBar />
       <Router>
         <Routes>
-          <Route path="/" element={<ChooseLicence choosedLicences={choosedLicences} setChoosedLicences={setChoosedLicences} />}/>
-
-          <Route path="/licences" element={<Licences />}/>
-          <Route path="/cartes" element={<Cartes />}/>
+          <Route path="/" element={<ChooseLicence choosedLicences={choosedLicences} setChoosedLicences={setChoosedLicences} />} />
+          <Route path="/play" element={<Play licences={choosedLicences} />} />
+          <Route path="/licences" element={<Licences />} />
+          <Route path="/cartes" element={<Cartes />} />
         </Routes>
       </Router>
-      {choosedLicences.map(licence => 
-                <div key={licence.id}>
-                    {licence.name}
-                    </div>
-            )}
-    </div>   
+    </div>
   )
 }
 
