@@ -60,10 +60,33 @@ function Play(licences) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        beforeChange: (current, next) => {
+            setOldSlide(current);
+            setActiveSlide(next);
+          },
+        afterChange: current => setActiveSlide2(current)
+
     };
+
+
+    const [oldSlide, setOldSlide] = useState(0);
+    const [activeSlide, setActiveSlide] = useState(0);
+    const [activeSlide2, setActiveSlide2] = useState(0);
 
     return (
         <>
+        <div className="slider-container">
+            <h2>beforeChange and afterChange hooks</h2>
+            <p>
+                BeforeChange {"=>"} oldSlide: <strong>{oldSlide}</strong>
+            </p>
+            <p>
+                BeforeChange {"=>"} activeSlide: <strong>{activeSlide}</strong>
+            </p>
+            <p>
+                AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
+            </p>
+            <Slider {...settings}></Slider>
             <div>
                 <h2>Player Deck</h2>
                 <Slider {...settings}>
@@ -85,6 +108,8 @@ function Play(licences) {
                     ))}
                 </Slider>
             </div>
+        </div>
+
             <br />
             {`Stat sélectionnée : ${stat}`}
 
