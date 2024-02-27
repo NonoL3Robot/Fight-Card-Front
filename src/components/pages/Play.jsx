@@ -11,6 +11,8 @@ function Play(licences) {
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
 
+    const [score, setScore] = useState(0);
+
     const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -63,7 +65,7 @@ function Play(licences) {
         beforeChange: (current, next) => {
             setOldSlide(current);
             setActiveSlide(next);
-          },
+        },
         afterChange: current => setActiveSlide2(current)
 
     };
@@ -78,39 +80,68 @@ function Play(licences) {
         setCompDeck((prevCards) => prevCards.filter((elem) => elem !== compCard));
     }
 
+    const fight = () => {
+        switch (stat) {
+            case statsList[0]:
+                //courage
+                playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage && setScore(score + 1);
+                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
+                break;
+            case statsList[1]:
+                //force
+                playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce && setScore(score + 1);
+                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
+                break;
+            case statsList[2]:
+                //intelligence
+                playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence && setScore(score + 1);
+                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
+                break;
+            default:
+                break;
+        }
+        openModal();
+    }
+
     return (
         <>
-        <div className="slider-container">
-            <h2>beforeChange and afterChange hooks</h2>
-            <p>
-                BeforeChange {"=>"} oldSlide: <strong>{oldSlide}</strong>
-            </p>
-            <p>
-                BeforeChange {"=>"} activeSlide: <strong>{activeSlide}</strong>
-            </p>
-            <p>
-                AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
-            </p>
-            <div>
-                <h2>Player Deck</h2>
-                <Slider {...settings}>
-                    {playerDeck.map((card) => (
+            {`Score : ${score}`}
+            <div className="slider-container">
+                <h2>beforeChange and afterChange hooks</h2>
+                <p>
+                    BeforeChange {"=>"} oldSlide: <strong>{oldSlide}</strong>
+                </p>
+                <p>
+                    BeforeChange {"=>"} activeSlide: <strong>{activeSlide}</strong>
+                </p>
+                <p>
+                    AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
+                </p>
+                <div>
+                    <h2>Player Deck</h2>
+                    <Slider {...settings}>
+                        {playerDeck.map((card) => (
+                            <div key={card.id}>
+                                <Card card={card} />
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+                <div
+                    className="btn"
+                    onClick={fight}
+                >
+                    FIGHT
+                </div>
+                <div>
+                    <h2>Computer Deck</h2>
+                    {compDeck.map((card) => (
                         <div key={card.id}>
                             <Card card={card} />
                         </div>
                     ))}
-                </Slider>
+                </div>
             </div>
-            <br />
-            <div>
-                <h2>Computer Deck</h2>
-                {compDeck.map((card) => (
-                    <div key={card.id}>
-                        <Card card={card} />
-                    </div>
-                ))}
-            </div>
-        </div>
 
             <br />
             {`Stat sélectionnée : ${stat}`}
