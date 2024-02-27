@@ -7,15 +7,14 @@ import { Card } from "../Card";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
-function Play({licences}) {
+function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) {
 
     const navigate = useNavigate();
 
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
 
-    const [scorePlayer, setScorePlayer] = useState(0);
-    const [scoreComp, setScoreComp] = useState(0);
+    
 
     const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -61,7 +60,7 @@ function Play({licences}) {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -84,32 +83,32 @@ function Play({licences}) {
     }
 
     const fight = () => {
+        if (playerDeck.length === 0) {
+            end();
+            return;
+        }
+        openModal();
         switch (stat) {
             case statsList[0]:
                 //courage
                 playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage && setScorePlayer(scorePlayer + 1);
                 playerDeck[activeSlide].statCourage < compDeck[activeSlide].statCourage && setScoreComp(scoreComp + 1);
-                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             case statsList[1]:
                 //force
                 playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce && setScorePlayer(scorePlayer + 1);
                 playerDeck[activeSlide].statForce < compDeck[activeSlide].statForce && setScoreComp(scoreComp + 1);
-                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             case statsList[2]:
                 //intelligence
                 playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence && setScorePlayer(scorePlayer + 1);
                 playerDeck[activeSlide].statIntelligence < compDeck[activeSlide].statIntelligence && setScoreComp(scoreComp + 1);
-                removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             default:
                 break;
         }
-        if (playerDeck.length() === 0) {
-            end();
-        }
-        openModal();
+        removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
+        
     }
 
     const end = () => {
