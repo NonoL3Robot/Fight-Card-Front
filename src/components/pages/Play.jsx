@@ -3,7 +3,7 @@ import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Card } from "../Card";
+import { Card, CardComp } from "../Card";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
@@ -156,6 +156,26 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
                 <p>
                     AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
                 </p>
+                
+                <div className="">
+                    <h2>Computer Deck</h2>
+                    <Slider>
+                    {compDeck.map((card) => (
+                        <div key={card.id}>
+                            <div>
+                            {/* Face de la carte */}
+                            {/* <Card card={card} /> */}
+
+                            {/* Dos de la carte */}
+                            <CardComp card={card} />
+                            
+                            </div>
+                        </div>
+                    ))}
+                    </Slider>
+                </div>
+
+                
                 <div>
                     <h2>Player Deck</h2>
                     <Slider {...settings}>
@@ -166,20 +186,14 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
                         ))}
                     </Slider>
                 </div>
+
                 <div
                     className="btn"
                     onClick={fight}
                 >
                     FIGHT
                 </div>
-                <div>
-                    <h2>Computer Deck</h2>
-                    {compDeck.map((card) => (
-                        <div key={card.id}>
-                            <Card card={card} />
-                        </div>
-                    ))}
-                </div>
+                
             </div>
 
             
