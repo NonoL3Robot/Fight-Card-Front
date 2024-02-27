@@ -14,7 +14,8 @@ function Play({licences}) {
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
 
-    const [score, setScore] = useState(0);
+    const [scorePlayer, setScorePlayer] = useState(0);
+    const [scoreComp, setScoreComp] = useState(0);
 
     const shuffleArray = array => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -86,17 +87,20 @@ function Play({licences}) {
         switch (stat) {
             case statsList[0]:
                 //courage
-                playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage && setScore(score + 1);
+                playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage && setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statCourage < compDeck[activeSlide].statCourage && setScoreComp(scoreComp + 1);
                 removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             case statsList[1]:
                 //force
-                playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce && setScore(score + 1);
+                playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce && setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statForce < compDeck[activeSlide].statForce && setScoreComp(scoreComp + 1);
                 removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             case statsList[2]:
                 //intelligence
-                playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence && setScore(score + 1);
+                playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence && setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statIntelligence < compDeck[activeSlide].statIntelligence && setScoreComp(scoreComp + 1);
                 removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
                 break;
             default:
@@ -114,7 +118,28 @@ function Play({licences}) {
 
     return (
         <>
-            {`Score : ${score}`}
+            {`ScorePlayer : ${scorePlayer}`}
+            <br />
+            {`ScoreComp : ${scoreComp}`}
+            <br />
+            {`Stat sélectionnée : ${stat}`}
+
+            <ReactModal
+                isOpen={isModalOpen}
+                className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
+            >
+                <p>Choisissez la stat : </p>
+                {statsList.map(elem =>
+                    <div
+                        key={elem}
+                        onClick={(e) => handleStat(e, elem)}
+                    >
+                        {elem}
+                    </div>
+                )}
+            </ReactModal>
+            <br />
+
             <div className="slider-container">
                 <h2>beforeChange and afterChange hooks</h2>
                 <p>
@@ -152,23 +177,7 @@ function Play({licences}) {
                 </div>
             </div>
 
-            <br />
-            {`Stat sélectionnée : ${stat}`}
-
-            <ReactModal
-                isOpen={isModalOpen}
-                className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
-            >
-                <p>Choisissez la stat : </p>
-                {statsList.map(elem =>
-                    <div
-                        key={elem}
-                        onClick={(e) => handleStat(e, elem)}
-                    >
-                        {elem}
-                    </div>
-                )}
-            </ReactModal>
+            
         </>
     )
 }
