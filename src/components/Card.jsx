@@ -11,3 +11,16 @@ export const Card = ({card}) => {
       </>
     );
 }
+
+
+export const CardComp = ({cardComp}) => {
+  return (
+    <>
+    <div className="card-container m-5">
+    <div><img src="src/images/lorcana.jpg" alt="dos de carte" /></div>
+
+    </div>
+    </>
+  );
+}
+
