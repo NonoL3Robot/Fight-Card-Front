@@ -73,6 +73,11 @@ function Play(licences) {
     const [activeSlide, setActiveSlide] = useState(0);
     const [activeSlide2, setActiveSlide2] = useState(0);
 
+    const removeCard = (playerCard, compCard) => {
+        setPlayerDeck((prevCards) => prevCards.filter((elem) => elem !== playerCard));
+        setCompDeck((prevCards) => prevCards.filter((elem) => elem !== compCard));
+    }
+
     return (
         <>
         <div className="slider-container">
@@ -100,13 +105,11 @@ function Play(licences) {
             <br />
             <div>
                 <h2>Computer Deck</h2>
-                <Slider {...settings}>
-                    {compDeck.map((card) => (
-                        <div key={card.id}>
-                            <Card card={card} />
-                        </div>
-                    ))}
-                </Slider>
+                {compDeck.map((card) => (
+                    <div key={card.id}>
+                        <Card card={card} />
+                    </div>
+                ))}
             </div>
         </div>
 
