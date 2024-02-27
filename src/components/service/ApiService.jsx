@@ -17,36 +17,36 @@ class ApiService {
             throw error;
         }
     }
-    /*
+
     async post(endpoint = '', objectToSave) {
-        try{
+        try {
             const response = await this.api.post(endpoint, objectToSave);
             return response.data;
-        } catch (error){
-            console.error('Erreur lors du POST !: ' ,error)
+        } catch (error) {
+            console.error('Erreur lors du POST !: ', error);
             throw error;
         }
     }
 
     async put(endpoint = '', objectToSave) {
-        try{
+        try {
             const response = await this.api.put(endpoint, objectToSave);
             return response.data;
-        } catch (error){
-            console.error('Erreur lors du PUT !: ' ,error)
+        } catch (error) {
+            console.error('Erreur lors du PUT !: ', error);
             throw error;
         }
     }
 
-    async delete(endpoint=''){
-        try{
+    async delete(endpoint = '') {
+        try {
             const response = await this.api.delete(endpoint);
             return response.data;
-        } catch (error){
-            console.error('Erreur lors du DELETE !: ' ,error)
+        } catch (error) {
+            console.error('Erreur lors du DELETE !: ', error);
             throw error;
         }
-    }*/
+    }
 }
 
 export default ApiService
