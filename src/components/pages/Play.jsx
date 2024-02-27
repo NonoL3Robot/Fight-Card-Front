@@ -5,8 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Card } from "../Card";
 import ReactModal from "react-modal";
+import { useNavigate } from "react-router-dom";
 
-function Play(licences) {
+function Play({licences}) {
+
+    const navigate = useNavigate();
 
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
@@ -35,7 +38,6 @@ function Play(licences) {
 
     const [stat, setStat] = useState('');
 
-    // TODO ajouter switch case pour mapper les stats
     const handleStat = (e, elem) => {
         e.preventDefault;
         setStat(elem);
@@ -43,7 +45,7 @@ function Play(licences) {
     }
     let deck = [];
 
-    licences.licences.forEach((licence) => {
+    licences.forEach((licence) => {
         licence.cartes.forEach((carte) => deck.push(carte));
     });
     shuffleArray(deck);
@@ -100,7 +102,14 @@ function Play(licences) {
             default:
                 break;
         }
+        if (playerDeck.length() === 0) {
+            end();
+        }
         openModal();
+    }
+
+    const end = () => {
+        navigate('/end');
     }
 
     return (
