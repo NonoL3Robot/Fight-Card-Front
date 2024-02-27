@@ -14,6 +14,12 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
 
+    window.onbeforeunload = function() { 
+        window.setTimeout(function () { 
+            window.location = "/";
+        }, 0); 
+        window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
+    }
     
 
     const shuffleArray = array => {
