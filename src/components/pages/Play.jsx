@@ -29,11 +29,11 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
     ReactModal.setAppElement('#root');
 
     const closeModal = () => {
-        setModalOpen(false)
+        setModalOpen(false);
     }
 
-    const openModal = () => {
-        setModalOpen(true)
+    const openModal = (cardAvailable) => {
+        setModalOpen(true);
     }
 
     const [stat, setStat] = useState('');
@@ -83,7 +83,7 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
     }
 
     const fight = () => {
-        if (playerDeck.length === 0) {
+        if (playerDeck.length === 1) {
             end();
             return;
         }
