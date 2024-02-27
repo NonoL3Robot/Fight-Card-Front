@@ -91,7 +91,6 @@ function Play(licences) {
             <p>
                 AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
             </p>
-            <Slider {...settings}></Slider>
             <div>
                 <h2>Player Deck</h2>
                 <Slider {...settings}>
