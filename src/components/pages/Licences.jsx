@@ -6,48 +6,52 @@ function Licences() {
 
     const api = new ApiService("http://localhost:8080/api/v1/licences");
     const [licences, setLicences] = useState([]);
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [newLicence, setNewLicence] = useState({
+    const [isModalOpen, setisModalOpen] = useState(false);
+    const [currentLicence, setCurrentLicence] = useState({
+        id: 0,
         name: "",
-        cartes: []
     });
 
-    useEffect(() => {
+    const fetchLicences = () => {
         api.get()
             .then((response) => setLicences(response))
             .catch((error) => alert(error.message))
-            .finally(() => console.log('GET terminé'))
-    }, []);
+            .finally(() => console.log('GET terminé'));
+    }
 
     useEffect(() => {
-        if (newLicence.name !== "") {
-            api.post(undefined, newLicence)
-                .then((data) => setLicences((prevLicences) => [...prevLicences, data]))
-                .catch((error) => alert(error.message))
-                .finally(() => console.log("POST terminé"))
-        }
-    }, [newLicence]);
+        fetchLicences();
+    }, []);
 
     ReactModal.setAppElement('#root');
 
     const closeModal = () => {
-        setModalOpen(false)
+        setisModalOpen(false);
     }
 
-    const openModal = () => {
-        setModalOpen(true)
+    const openModal = (licence) => {
+
+        setCurrentLicence(licence);
+        setisModalOpen(true);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleUpdate = (e) => {
+        e.preventDefault();
 
         const formData = new FormData(e.target);
 
-        setNewLicence({
-            name: formData.get('name'),
-            cartes: formData.get('cartes')
-        });
-        closeModal();
+        api.post(undefined, {
+            id: formData.get('id'),
+            version: formData.get('version'),
+            name: formData.get('name')
+        })
+            .then(() => {
+                fetchLicences();
+                closeModal();
+            })
+            .catch((error) => alert(error.message))
+            .finally(() => console.log("POST (update) terminé"));
+
     };
 
     const deleteLicence = (licenceId) => {
@@ -58,11 +62,15 @@ function Licences() {
             });
     };
 
+    const updateLicence = (licence) => {
+        openModal(licence);
+    };
+
     return (
         <>
             <h1>Licences</h1>
             <div className="m-10 w-4/6 m-auto">
-                <div className="btn btn-outline btn-inf" onClick={openModal}>Créer licence</div>
+                <div className="btn btn-outline btn-inf" onClick={() => { updateLicence({ id: 0, version: 0, name: "" }) }}>Créer licence</div>
                 <table className="table table-zebra border">
                     <thead>
                         <tr>
@@ -73,6 +81,12 @@ function Licences() {
                         {licences.map(elem => (
                             <tr key={elem.id}>
                                 <td>{elem.name}</td>
+                                <td>
+                                    <button
+                                        onClick={() => { updateLicence(elem) }}
+                                        className="btn btn-warning m-auto"
+                                    >Modifier</button>
+                                </td>
                                 <td>
                                     <button
                                         onClick={() => { deleteLicence(elem.id.toString()) }}
@@ -88,15 +102,19 @@ function Licences() {
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
+                data={currentLicence}
             >
-                <p className="font-semibold">Ajouter votre licence : </p>
-                <form onSubmit={handleSubmit}>
+                <p className="font-semibold">Créer/Modifier votre licence : </p>
+                <form onSubmit={handleUpdate}>
                     <div className="grid grid-cols-2 gap-4 mb-5">
+                        <input type="hidden" name={"id"} value={currentLicence.id} />
+                        <input type="hidden" name="version" value={currentLicence.version} />
                         <input
                             placeholder="Nom : "
                             className="flex input input-bordered"
                             type="text"
                             name="name"
+                            defaultValue={currentLicence.name}
                         />
                     </div>
                     <div className="m-auto w-fit">
@@ -104,7 +122,7 @@ function Licences() {
                             type="submit"
                             className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                         >
-                            Ajouter la licence
+                            Créer/Modifier la licence
                         </button>
                     </div>
                 </form>
