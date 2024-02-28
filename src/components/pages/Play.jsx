@@ -7,48 +7,47 @@ import { Card, CardComp } from "../Card";
 import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 
-function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) {
-
+function Play({ licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp }) {
     const navigate = useNavigate();
 
     const rounds = 10;
     const statsList = ["statCourage", "statForce", "statIntelligence"];
 
-    window.onbeforeunload = function() { 
-        window.setTimeout(function () { 
+    window.onbeforeunload = function () {
+        window.setTimeout(function () {
             window.location = "/";
-        }, 0); 
-        window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
-    }
-    
+        }, 0);
+        window.onbeforeunload = null;
+    };
 
-    const shuffleArray = array => {
+    const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             const temp = array[i];
             array[i] = array[j];
             array[j] = temp;
         }
-    }
+    };
 
     const [isModalOpen, setModalOpen] = useState(true);
-    ReactModal.setAppElement('#root');
+    ReactModal.setAppElement("#root");
 
     const closeModal = () => {
         setModalOpen(false);
-    }
+    };
 
     const openModal = (cardAvailable) => {
         setModalOpen(true);
-    }
+    };
 
-    const [stat, setStat] = useState('');
+    const [stat, setStat] = useState("");
 
     const handleStat = (e, elem) => {
-        e.preventDefault;
+        e.preventDefault();
         setStat(elem);
         closeModal();
-    }
+    };
+
     let deck = [];
 
     licences.forEach((licence) => {
@@ -57,7 +56,6 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
     shuffleArray(deck);
     console.log(deck);
 
-    /* Distribution aléatoire à partir de allCards ? */
     let [playerDeck, setPlayerDeck] = useState(deck.slice(0, 10));
     let [compDeck, setCompDeck] = useState(deck.slice(10, 20));
 
@@ -74,10 +72,8 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
             setOldSlide(current);
             setActiveSlide(next);
         },
-        afterChange: current => setActiveSlide2(current)
-
+        afterChange: (current) => setActiveSlide2(current)
     };
-
 
     const [oldSlide, setOldSlide] = useState(0);
     const [activeSlide, setActiveSlide] = useState(0);
@@ -86,62 +82,68 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
     const removeCard = (playerCard, compCard) => {
         setPlayerDeck((prevCards) => prevCards.filter((elem) => elem !== playerCard));
         setCompDeck((prevCards) => prevCards.filter((elem) => elem !== compCard));
-    }
+    };
 
     const fight = () => {
         if (playerDeck.length === 1) {
             end();
             return;
         }
-        openModal();
+
         switch (stat) {
             case statsList[0]:
-                //courage
-                playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage && setScorePlayer(scorePlayer + 1);
-                playerDeck[activeSlide].statCourage < compDeck[activeSlide].statCourage && setScoreComp(scoreComp + 1);
+                playerDeck[activeSlide].statCourage > compDeck[activeSlide].statCourage &&
+                    setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statCourage < compDeck[activeSlide].statCourage &&
+                    setScoreComp(scoreComp + 1);
                 break;
             case statsList[1]:
-                //force
-                playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce && setScorePlayer(scorePlayer + 1);
-                playerDeck[activeSlide].statForce < compDeck[activeSlide].statForce && setScoreComp(scoreComp + 1);
+                playerDeck[activeSlide].statForce > compDeck[activeSlide].statForce &&
+                    setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statForce < compDeck[activeSlide].statForce &&
+                    setScoreComp(scoreComp + 1);
                 break;
             case statsList[2]:
-                //intelligence
-                playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence && setScorePlayer(scorePlayer + 1);
-                playerDeck[activeSlide].statIntelligence < compDeck[activeSlide].statIntelligence && setScoreComp(scoreComp + 1);
+                playerDeck[activeSlide].statIntelligence > compDeck[activeSlide].statIntelligence &&
+                    setScorePlayer(scorePlayer + 1);
+                playerDeck[activeSlide].statIntelligence < compDeck[activeSlide].statIntelligence &&
+                    setScoreComp(scoreComp + 1);
                 break;
             default:
                 break;
         }
         removeCard(playerDeck[activeSlide], compDeck[activeSlide]);
-        
-    }
+        determineStat(); // Appelle determineStat après le combat
+    };
+
+    const determineStat = () => {
+        if (playerDeck.length % 2 === 0) {
+            const randomStat = statsList[Math.floor(Math.random() * statsList.length)];
+            setStat(randomStat);
+        } else {
+            openModal();
+        }
+    };
 
     const end = () => {
-        navigate('/end');
-    }
+        navigate("/end");
+    };
 
     return (
         <>
-            {`ScorePlayer : ${scorePlayer}`}
-            <br />
-            {`ScoreComp : ${scoreComp}`}
-            <br />
-            {`Stat sélectionnée : ${stat}`}
+
+            <strong>{`Stat sélectionnée : ${stat}`}</strong>
 
             <ReactModal
                 isOpen={isModalOpen}
                 className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
             >
                 <p>Choisissez la stat : </p>
-                {statsList.map(elem =>
-                    <div
-                        key={elem}
-                        onClick={(e) => handleStat(e, elem)}
-                    >
+                {statsList.map((elem) => (
+                    <div key={elem} onClick={(e) => handleStat(e, elem)}>
                         {elem}
                     </div>
-                )}
+                ))}
             </ReactModal>
             <br />
 
@@ -156,28 +158,24 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
                 <p>
                     AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
                 </p>
-                
-                <div className="">
-                    <h2>Computer Deck</h2>
-                    <Slider>
-                    {compDeck.map((card) => (
-                        <div key={card.id}>
-                            <div>
-                            {/* Face de la carte */}
-                            {/* <Card card={card} /> */}
 
-                            {/* Dos de la carte */}
-                            <CardComp card={card} />
-                            
+                <div>
+                    <h2>Computer Deck</h2>
+                    {`ScoreComp : ${scoreComp}`}
+                    <Slider infinite={false}>
+                        {compDeck.map((card) => (
+                            <div key={card.id}>
+                                <div>
+                                    <Card card={card} />
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                     </Slider>
                 </div>
 
-                
                 <div>
                     <h2>Player Deck</h2>
+                    {`ScorePlayer : ${scorePlayer}`}
                     <Slider {...settings}>
                         {playerDeck.map((card) => (
                             <div key={card.id}>
@@ -187,18 +185,12 @@ function Play({licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp}) 
                     </Slider>
                 </div>
 
-                <div
-                    className="btn"
-                    onClick={fight}
-                >
+                <div className="btn" onClick={fight}>
                     FIGHT
                 </div>
-                
             </div>
-
-            
         </>
-    )
+    );
 }
 
 export default Play;
