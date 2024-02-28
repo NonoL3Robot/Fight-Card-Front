@@ -144,6 +144,8 @@ function Play({ licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp }
                         {elem}
                     </div>
                 ))}
+                <br />
+                <a href="/">Menu Principal</a>
             </ReactModal>
             <br />
 
