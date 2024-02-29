@@ -17,7 +17,7 @@ function Licences() {
             .then((response) => setLicences(response))
             .catch((error) => alert(error.message))
             .finally(() => console.log('GET terminé'));
-    }
+    };
 
     useEffect(() => {
         fetchLicences();
@@ -50,7 +50,7 @@ function Licences() {
                 closeModal();
             })
             .catch((error) => alert(error.message))
-            .finally(() => console.log("POST (update) terminé"));
+            .finally(() => console.log("POST terminé"));
 
     };
 
@@ -74,22 +74,24 @@ function Licences() {
                 <table className="table table-zebra border">
                     <thead>
                         <tr>
+                            <th>ID Licence</th>
                             <th>Name</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {licences.map(elem => (
-                            <tr key={elem.id}>
-                                <td>{elem.name}</td>
+                        {licences.map(licence => (
+                            <tr key={licence.id}>
+                                <td>{licence.id}</td>
+                                <td>{licence.name}</td>
                                 <td>
                                     <button
-                                        onClick={() => { updateLicence(elem) }}
+                                        onClick={() => { updateLicence(licence) }}
                                         className="btn btn-warning m-auto"
                                     >Modifier</button>
                                 </td>
                                 <td>
                                     <button
-                                        onClick={() => { deleteLicence(elem.id.toString()) }}
+                                        onClick={() => { deleteLicence(licence.id.toString()) }}
                                         className="btn btn-error m-auto"
                                     >Supprimer</button>
                                 </td>
@@ -107,7 +109,7 @@ function Licences() {
                 <p className="font-semibold">Créer/Modifier votre licence : </p>
                 <form onSubmit={handleUpdate}>
                     <div className="grid grid-cols-2 gap-4 mb-5">
-                        <input type="hidden" name={"id"} value={currentLicence.id} />
+                        <input type="hidden" name="id" value={currentLicence.id} />
                         <input type="hidden" name="version" value={currentLicence.version} />
                         <input
                             placeholder="Nom : "
