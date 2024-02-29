@@ -1,11 +1,11 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Licences from './components/pages/Licences';
-import Cartes from './components/pages/Cartes';
-import ChooseLicence from './components/pages/ChooseLicence';
+import { NavBar } from './components/NavBar';
+import { Licences } from './components/pages/Licences';
+import { Cartes } from './components/pages/Cartes';
+import { ChooseLicence } from './components/pages/ChooseLicence';
 import { useState } from 'react';
-import Play from './components/pages/Play';
+import { Play } from './components/pages/Play';
 import { End } from './components/pages/End';
 
 export const App = () => {
