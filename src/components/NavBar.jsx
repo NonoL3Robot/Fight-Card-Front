@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function NavBar() {
 
     return (
@@ -9,10 +11,12 @@ function NavBar() {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
                 <li>
-                    <a href="/licences">Licences</a>
+                    <Link to="/licences">Licences</Link>
                 </li>
                 <li>
-                    <a href="/cartes">Cartes</a>
+
+                <Link to="/cartes">Cartes</Link>
+
                 </li>
             </ul>
           </div>

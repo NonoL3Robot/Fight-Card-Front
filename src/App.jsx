@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className='m-5'>
-      <NavBar />
       <Router>
+        <NavBar />
         <Routes>
           <Route path="/" element={<ChooseLicence choosedLicences={choosedLicences} setChoosedLicences={setChoosedLicences} />} />
           <Route path="/play" element={<Play licences={choosedLicences} scorePlayer={scorePlayer} setScorePlayer={setScorePlayer} scoreComp={scoreComp} setScoreComp={setScoreComp} />} />

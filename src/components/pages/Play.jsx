@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Card, CardComp } from "../Card";
 import ReactModal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { Routes, useNavigate } from "react-router-dom";
 
 function Play({ licences, scorePlayer, setScorePlayer, scoreComp, setScoreComp }) {
     const navigate = useNavigate();
