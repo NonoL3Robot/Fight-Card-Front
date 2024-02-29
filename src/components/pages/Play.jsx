@@ -157,7 +157,7 @@ export const Play = ({
       <br />
 
       <div className="slider-container">
-        <h2>beforeChange and afterChange hooks</h2>
+        {/* <h2>beforeChange and afterChange hooks</h2>
         <p>
           BeforeChange {'=>'} oldSlide: <strong>{oldSlide}</strong>
         </p>
@@ -166,12 +166,12 @@ export const Play = ({
         </p>
         <p>
           AfterChange {'=>'} activeSlide: <strong>{activeSlide2}</strong>
-        </p>
+        </p> */}
 
         <div>
           <h2>Computer Deck</h2>
           {`ScoreComp : ${scoreComp}`}
-          <Slider infinite={false}>
+          <Slider infinite={false} slidesToShow={5}>
             {compDeck.map((card) => (
               <div key={card.id}>
                 <div>

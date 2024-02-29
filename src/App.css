@@ -62,3 +62,192 @@
 .slick-dots li.slick-active button {
   color: #333;
 }
+
+/*Carte*/
+
+p.italicize {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 11px;
+  border: 3px solid gold;
+  border-radius: 6px;
+  margin: 0px;
+  padding: 5px;
+  text-align: center;
+}
+
+span.label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.nameimageinfo {
+  width: 310px;
+  height: 500px;
+  padding: 10px;
+  border: 10px solid gold;
+  border-radius: 20px;
+}
+
+img.headshot {
+  padding: 0px;
+  margin: 0px;
+  border: 5px yellow outset;
+  box-shadow: 3px 3px 10px #000;
+  width: 300px;
+  height: 200px;
+}
+
+/* */
+/* Just for fun - extra style things */
+
+/* Background of water type cards */
+
+div.water {
+  background: linear-gradient(
+    to bottom right,
+    #d9e4ec,
+    #adc1d1,
+    #7d99af,
+    #557792,
+    #7d99af,
+    #adc1d1
+  );
+}
+
+/* Background of lightning type cards */
+
+div.lightning {
+  background: linear-gradient(
+    to bottom right,
+    #ffffa4,
+    #fff870,
+    #fff200,
+    #fff870,
+    #ffffa4,
+    #fff870
+  );
+}
+
+/* Background of fire type cards */
+
+div.fire {
+  background: linear-gradient(
+    to bottom right,
+    #ffbfba,
+    #ff978f,
+    #ff756b,
+    #ff594c,
+    #ff756b,
+    #ff978f
+  );
+}
+
+/* Background of grass type cards */
+
+div.grass {
+  background: linear-gradient(
+    to bottom right,
+    #aae5b7,
+    #78cf8b,
+    #4fb665,
+    #319d49,
+    #4fb665,
+    #78cf8b
+  );
+}
+
+/* Font styling */
+
+div {
+  font-family: sans-serif;
+}
+
+td.basic {
+  font-weight: bold;
+  font-size: 11px;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+td.nameofanimal {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+}
+
+td.hp {
+  color: crimson;
+  font-size: 20px;
+  text-align: right;
+  font-weight: bold;
+  width: 20%;
+}
+
+td.typesign {
+  font-size: 20px;
+  text-align: center;
+  width: 5%;
+}
+
+p.description {
+  padding: 2px 0px 0px 0px;
+  margin: 0px 0px 5px 0px;
+  background: linear-gradient(to right, goldenrod, yellow, goldenrod);
+  font-size: 11px;
+  font-family: sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+}
+
+span.labeltext {
+  font-size: 11px;
+}
+
+td.energy {
+  width: 18%;
+  font-size: 20px;
+  text-align: center;
+}
+
+td.damage {
+  font-weight: bold;
+  align-items: right;
+}
+
+table.costs {
+  font-size: 11px;
+  text-align: center;
+  width: 100%;
+}
+
+tr.costheaders {
+  font-weight: bold;
+}
+
+tr.costicons {
+  font-size: 20px;
+}
+
+table.nameheaders {
+  width: 100%;
+}
+
+table.stats {
+  width: 100%;
+  text-align: center;
+}
+
+p.bottomtext {
+  font-size: 7px;
+  text-align: center;
+}
