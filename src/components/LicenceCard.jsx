@@ -1,7 +1,3 @@
-export const LicenceCard = ({licence}) => {
-    return (
-      <>
-        {licence.name}
-      </>
-    );
-}
+export const LicenceCard = ({ licence }) => {
+  return <>{licence.name}</>;
+};

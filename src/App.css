@@ -1,68 +1,64 @@
 /* Add the following styles to your CSS file or component */
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination button {
-    background-color: #3498db;
-    color: #fff;
-    border: 1px solid #3498db;
-    padding: 8px 12px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .pagination button:hover {
-    background-color: #07598f;
-  }
-  
-  .pagination button.active {
-    background-color: #07598f;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.pagination button {
+  background-color: #3498db;
+  color: #fff;
+  border: 1px solid #3498db;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #07598f;
+}
+
+.pagination button.active {
+  background-color: #07598f;
+}
 
 /* Caroussel*/
-  
+
 .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-direction: column; /* Afficher de haut en bas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column; /* Afficher de haut en bas */
+}
 
-  }
-  
-  .slick-slider {
-    width: 80%; 
-    margin: 0 auto;
-  }
-  
-  .slick-prev,
-  .slick-next {
-    font-size: 24px;
-    color: #000;
-  }
-  
-  .slick-prev:hover,
-  .slick-next:hover {
-    color: #333; 
-  }
-  
-  .slick-dots {
-    bottom: 10px;
-  }
-  
-  .slick-dots li button {
-    font-size: 12px;
-    color: #000;
-  }
-  
-  .slick-dots li.slick-active button {
-    color: #333;
-  }
-  
+.slick-slider {
+  width: 80%;
+  margin: 0 auto;
+}
 
+.slick-prev,
+.slick-next {
+  font-size: 24px;
+  color: #000;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  color: #333;
+}
+
+.slick-dots {
+  bottom: 10px;
+}
+
+.slick-dots li button {
+  font-size: 12px;
+  color: #000;
+}
+
+.slick-dots li.slick-active button {
+  color: #333;
+}
