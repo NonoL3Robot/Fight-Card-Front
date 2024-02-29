@@ -186,7 +186,7 @@ export const Play = ({
           </Slider>
         </div>
 
-        <div className="btn" onClick={fight}>
+        <div className="btnFight" onClick={fight}>
           FIGHT
         </div>
       </div>
