@@ -12,7 +12,7 @@ export const Card = ({ card }) => {
   );
 };
 
-export const CardComp = ({ cardComp }) => {
+export const CardComp = () => {
   return (
     <>
       <div className="card-container m-5">

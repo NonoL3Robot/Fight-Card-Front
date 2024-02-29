@@ -1,14 +1,14 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Licences from "./components/pages/Licences";
-import Cartes from "./components/pages/Cartes";
-import ChooseLicence from "./components/pages/ChooseLicence";
-import { useEffect, useState } from "react";
-import Play from "./components/pages/Play";
-import { End } from "./components/pages/End";
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Licences from './components/pages/Licences';
+import Cartes from './components/pages/Cartes';
+import ChooseLicence from './components/pages/ChooseLicence';
+import { useState } from 'react';
+import Play from './components/pages/Play';
+import { End } from './components/pages/End';
 
-function App() {
+export const App = () => {
   const [choosedLicences, setChoosedLicences] = useState([]);
   const [scorePlayer, setScorePlayer] = useState(0);
   const [scoreComp, setScoreComp] = useState(0);
@@ -49,6 +49,4 @@ function App() {
       </Router>
     </div>
   );
-}
-
-export default App;
+};

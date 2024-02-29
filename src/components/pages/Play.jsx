@@ -1,27 +1,25 @@
-import React from "react";
-import { useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Card, CardComp } from "../Card";
-import ReactModal from "react-modal";
-import { Routes, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { Card, CardComp } from '../Card';
+import ReactModal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 
-function Play({
+export const Play = ({
   licences,
   scorePlayer,
   setScorePlayer,
   scoreComp,
   setScoreComp,
-}) {
+}) => {
   const navigate = useNavigate();
 
-  const rounds = 10;
-  const statsList = ["statCourage", "statForce", "statIntelligence"];
+  const statsList = ['statCourage', 'statForce', 'statIntelligence'];
 
   window.onbeforeunload = function () {
     window.setTimeout(function () {
-      window.location = "/";
+      window.location = '/';
     }, 0);
     window.onbeforeunload = null;
   };
@@ -36,17 +34,17 @@ function Play({
   };
 
   const [isModalOpen, setModalOpen] = useState(true);
-  ReactModal.setAppElement("#root");
+  ReactModal.setAppElement('#root');
 
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  const openModal = (cardAvailable) => {
+  const openModal = () => {
     setModalOpen(true);
   };
 
-  const [stat, setStat] = useState("");
+  const [stat, setStat] = useState('');
 
   const handleStat = (e, elem) => {
     e.preventDefault();
@@ -65,8 +63,8 @@ function Play({
   let [playerDeck, setPlayerDeck] = useState(deck.slice(0, 10));
   let [compDeck, setCompDeck] = useState(deck.slice(10, 20));
 
-  console.log("playerDeck", playerDeck);
-  console.log("compDeck", compDeck);
+  console.log('playerDeck', playerDeck);
+  console.log('compDeck', compDeck);
 
   const settings = {
     dots: true,
@@ -136,7 +134,7 @@ function Play({
   };
 
   const end = () => {
-    navigate("/end");
+    navigate('/end');
   };
 
   return (
@@ -161,13 +159,13 @@ function Play({
       <div className="slider-container">
         <h2>beforeChange and afterChange hooks</h2>
         <p>
-          BeforeChange {"=>"} oldSlide: <strong>{oldSlide}</strong>
+          BeforeChange {'=>'} oldSlide: <strong>{oldSlide}</strong>
         </p>
         <p>
-          BeforeChange {"=>"} activeSlide: <strong>{activeSlide}</strong>
+          BeforeChange {'=>'} activeSlide: <strong>{activeSlide}</strong>
         </p>
         <p>
-          AfterChange {"=>"} activeSlide: <strong>{activeSlide2}</strong>
+          AfterChange {'=>'} activeSlide: <strong>{activeSlide2}</strong>
         </p>
 
         <div>
@@ -177,7 +175,7 @@ function Play({
             {compDeck.map((card) => (
               <div key={card.id}>
                 <div>
-                  <Card card={card} />
+                  <CardComp />
                 </div>
               </div>
             ))}
@@ -202,6 +200,4 @@ function Play({
       </div>
     </>
   );
-}
-
-export default Play;
+};

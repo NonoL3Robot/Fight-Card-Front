@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export const End = ({ scorePlayer, scoreComp }) => {
   const navigate = useNavigate();
   const redirect = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (

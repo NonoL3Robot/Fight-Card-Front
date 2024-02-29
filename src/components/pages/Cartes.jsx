@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import ApiService from "../service/ApiService";
-import ReactModal from "react-modal";
+import { useEffect, useState } from 'react';
+import ApiService from '../service/ApiService';
+import ReactModal from 'react-modal';
 
-function Cartes() {
-  const api = new ApiService("http://localhost:8080/api/v1/cartes");
+export const Cartes = () => {
+  const api = new ApiService('http://localhost:8080/api/v1/cartes');
   const [cartes, setCartes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [currentCard, setCurrentCard] = useState({
     id: 0,
-    name: "",
-    description: "",
+    name: '',
+    description: '',
     statCourage: 0,
     statIntelligence: 0,
     statForce: 0,
@@ -23,7 +23,7 @@ function Cartes() {
       .get()
       .then((response) => setCartes(response))
       .catch((error) => alert(error.message))
-      .finally(() => console.log("GET terminé"));
+      .finally(() => console.log('GET terminé'));
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Cartes() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  ReactModal.setAppElement("#root");
+  ReactModal.setAppElement('#root');
 
   const closeModal = () => {
     setisModalOpen(false);
@@ -55,21 +55,21 @@ function Cartes() {
 
     api
       .post(undefined, {
-        id: formData.get("id"),
-        version: formData.get("version"),
-        name: formData.get("name"),
-        description: formData.get("description"),
-        statCourage: formData.get("statCourage"),
-        statIntelligence: formData.get("statIntelligence"),
-        statForce: formData.get("statForce"),
-        licenceId: formData.get("licenceId"),
+        id: formData.get('id'),
+        version: formData.get('version'),
+        name: formData.get('name'),
+        description: formData.get('description'),
+        statCourage: formData.get('statCourage'),
+        statIntelligence: formData.get('statIntelligence'),
+        statForce: formData.get('statForce'),
+        licenceId: formData.get('licenceId'),
       })
       .then(() => {
         fetchCartes();
         closeModal();
       })
       .catch((error) => alert(error.message))
-      .finally(() => console.log("POST terminé"));
+      .finally(() => console.log('POST terminé'));
   };
 
   const deleteCarte = (carteId) => {
@@ -95,8 +95,8 @@ function Cartes() {
             updateCarte({
               id: 0,
               version: 0,
-              name: "",
-              description: "",
+              name: '',
+              description: '',
               statCourage: 0,
               statIntelligence: 0,
               statForce: 0,
@@ -158,7 +158,7 @@ function Cartes() {
               <button
                 key={index + 1}
                 onClick={() => paginate(index + 1)}
-                className={currentPage === index + 1 ? "active" : ""}
+                className={currentPage === index + 1 ? 'active' : ''}
               >
                 {index + 1}
               </button>
@@ -238,6 +238,4 @@ function Cartes() {
       </div>
     </>
   );
-}
-
-export default Cartes;
+};

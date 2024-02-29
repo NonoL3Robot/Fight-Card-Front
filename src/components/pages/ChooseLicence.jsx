@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import ApiService from "../service/ApiService";
-import { useNavigate } from "react-router-dom";
-import { LicenceCard } from "../LicenceCard";
+import { useEffect, useState } from 'react';
+import ApiService from '../service/ApiService';
+import { useNavigate } from 'react-router-dom';
+import { LicenceCard } from '../LicenceCard';
 
-function ChooseLicence({ choosedLicences, setChoosedLicences }) {
+export const ChooseLicence = ({ choosedLicences, setChoosedLicences }) => {
   const navigate = useNavigate();
 
-  const api = new ApiService("http://localhost:8080/api/v1/licences");
+  const api = new ApiService('http://localhost:8080/api/v1/licences');
   const [licences, setLicences] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
       .get()
       .then((response) => setLicences(response))
       .catch((error) => alert(error.message))
-      .finally(() => console.log("GET terminé"));
+      .finally(() => console.log('GET terminé'));
   }, []);
 
   const handleClick = (licence) => {
@@ -28,7 +28,7 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
   };
 
   const handleConfirm = () => {
-    navigate("/play");
+    navigate('/play');
   };
 
   return (
@@ -39,7 +39,7 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
           onClick={() => {
             handleClick(licence);
           }}
-          style={choosedLicences.includes(licence) ? { color: "red" } : {}}
+          style={choosedLicences.includes(licence) ? { color: 'red' } : {}}
         >
           <LicenceCard licence={licence} />
         </div>
@@ -53,6 +53,4 @@ function ChooseLicence({ choosedLicences, setChoosedLicences }) {
       </button>
     </>
   );
-}
-
-export default ChooseLicence;
+};

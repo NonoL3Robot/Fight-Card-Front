@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import ApiService from "../service/ApiService";
-import ReactModal from "react-modal";
+import { useEffect, useState } from 'react';
+import ApiService from '../service/ApiService';
+import ReactModal from 'react-modal';
 
-function Licences() {
-  const api = new ApiService("http://localhost:8080/api/v1/licences");
+export const Licences = () => {
+  const api = new ApiService('http://localhost:8080/api/v1/licences');
   const [licences, setLicences] = useState([]);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [currentLicence, setCurrentLicence] = useState({
     id: 0,
-    name: "",
+    name: '',
   });
 
   const fetchLicences = () => {
@@ -16,14 +16,14 @@ function Licences() {
       .get()
       .then((response) => setLicences(response))
       .catch((error) => alert(error.message))
-      .finally(() => console.log("GET terminé"));
+      .finally(() => console.log('GET terminé'));
   };
 
   useEffect(() => {
     fetchLicences();
   }, []);
 
-  ReactModal.setAppElement("#root");
+  ReactModal.setAppElement('#root');
 
   const closeModal = () => {
     setisModalOpen(false);
@@ -41,16 +41,16 @@ function Licences() {
 
     api
       .post(undefined, {
-        id: formData.get("id"),
-        version: formData.get("version"),
-        name: formData.get("name"),
+        id: formData.get('id'),
+        version: formData.get('version'),
+        name: formData.get('name'),
       })
       .then(() => {
         fetchLicences();
         closeModal();
       })
       .catch((error) => alert(error.message))
-      .finally(() => console.log("POST terminé"));
+      .finally(() => console.log('POST terminé'));
   };
 
   const deleteLicence = (licenceId) => {
@@ -73,7 +73,7 @@ function Licences() {
         <div
           className="btn btn-outline btn-inf"
           onClick={() => {
-            updateLicence({ id: 0, version: 0, name: "" });
+            updateLicence({ id: 0, version: 0, name: '' });
           }}
         >
           Créer licence
@@ -150,6 +150,4 @@ function Licences() {
       </ReactModal>
     </>
   );
-}
-
-export default Licences;
+};
