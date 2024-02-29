@@ -17,6 +17,8 @@ export const Play = ({
 
   const statsList = ['statCourage', 'statForce', 'statIntelligence'];
 
+  const statsEmoji = ['🗡️', '🥊', '🧠'];
+
   window.onbeforeunload = function () {
     window.setTimeout(function () {
       window.location = '/';
@@ -76,12 +78,11 @@ export const Play = ({
       setOldSlide(current);
       setActiveSlide(next);
     },
-    afterChange: (current) => setActiveSlide2(current),
   };
 
+  // eslint-disable-next-line no-unused-vars
   const [oldSlide, setOldSlide] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [activeSlide2, setActiveSlide2] = useState(0);
 
   const removeCard = (playerCard, compCard) => {
     setPlayerDeck((prevCards) =>
@@ -139,39 +140,30 @@ export const Play = ({
 
   return (
     <>
-      <strong>{`Stat sélectionnée : ${stat}`}</strong>
+      <div>
+        <strong>{`Stat sélectionnée : ${stat.split('stat')[1]}`}</strong>
 
-      <ReactModal
-        isOpen={isModalOpen}
-        className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
-      >
-        <p>Choisissez la stat : </p>
-        {statsList.map((elem) => (
-          <div key={elem} onClick={(e) => handleStat(e, elem)}>
-            {elem}
-          </div>
-        ))}
+        <ReactModal
+          isOpen={isModalOpen}
+          className="w-fit h-fit border p-10 mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-50"
+        >
+          <p>Choisissez la stat : </p>
+          <br />
+          {statsList.map((stat, index) => (
+            <div key={stat} onClick={(e) => handleStat(e, stat)}>
+              {statsEmoji[index]}
+              {stat.split('stat')}
+            </div>
+          ))}
+          <br />
+          <a href="/">Menu Principal</a>
+        </ReactModal>
         <br />
-        <a href="/">Menu Principal</a>
-      </ReactModal>
-      <br />
 
-      <div className="slider-container">
-        <h2>beforeChange and afterChange hooks</h2>
-        <p>
-          BeforeChange {'=>'} oldSlide: <strong>{oldSlide}</strong>
-        </p>
-        <p>
-          BeforeChange {'=>'} activeSlide: <strong>{activeSlide}</strong>
-        </p>
-        <p>
-          AfterChange {'=>'} activeSlide: <strong>{activeSlide2}</strong>
-        </p>
-
-        <div>
+        <div className="slider-container">
           <h2>Computer Deck</h2>
           {`ScoreComp : ${scoreComp}`}
-          <Slider infinite={false}>
+          <Slider infinite={false} slidesToShow={10} arrows={false}>
             {compDeck.map((card) => (
               <div key={card.id}>
                 <div>
@@ -182,7 +174,7 @@ export const Play = ({
           </Slider>
         </div>
 
-        <div>
+        <div className="slider-container">
           <h2>Player Deck</h2>
           {`ScorePlayer : ${scorePlayer}`}
           <Slider {...settings}>
