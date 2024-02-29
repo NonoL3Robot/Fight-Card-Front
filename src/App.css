@@ -251,3 +251,18 @@ p.bottomtext {
   font-size: 7px;
   text-align: center;
 }
+
+/* Fight */
+.btnFight {
+  background: #ff0000;
+  background: linear-gradient(#ff0000, #073763);
+  border-radius: 11px;
+  box-shadow: 0 1px #444444;
+  padding: 20px 45px;
+  color: #ffffff;
+  display: inline-block;
+  font:
+    normal bold 32px/1 'Komika',
+    cursive;
+  text-align: center;
+}
