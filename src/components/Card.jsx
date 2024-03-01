@@ -1,4 +1,4 @@
-export const Card = ({ card }) => {
+export const Card = ({ card, licenceName }) => {
   return (
     <>
       <div className="card-container m-5">
@@ -21,7 +21,7 @@ export const Card = ({ card }) => {
                   src="https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
                   alt="Peronnage"
                 />
-                <p className="description">{card.name}</p>
+                <p className="description">{licenceName}</p>
                 <div className="infoonly">
                   <table className="stats">
                     <tr>

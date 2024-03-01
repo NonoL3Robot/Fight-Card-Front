@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import ApiService from '../service/ApiService';
+import { httpClient } from '../services/http.client.js';
+import { effect } from '@preact/signals';
 import ReactModal from 'react-modal';
 
 export const Licences = () => {
-  const api = new ApiService('http://localhost:8080/api/v1/licences');
   const [licences, setLicences] = useState([]);
+  const [current, setCurrent] = useState(httpClient.currentUser.value);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [currentLicence, setCurrentLicence] = useState({
     id: 0,
@@ -12,15 +13,16 @@ export const Licences = () => {
   });
 
   const fetchLicences = () => {
-    api
-      .get()
-      .then((response) => setLicences(response))
-      .catch((error) => alert(error.message))
-      .finally(() => console.log('GET terminé'));
+    httpClient.api
+      .get('api/v1/licences')
+      .then((response) => setLicences(response?.content || []));
   };
 
   useEffect(() => {
     fetchLicences();
+    effect(() => {
+      setCurrent(httpClient.currentUser.value);
+    });
   }, []);
 
   ReactModal.setAppElement('#root');
@@ -39,8 +41,8 @@ export const Licences = () => {
 
     const formData = new FormData(e.target);
 
-    api
-      .post(undefined, {
+    httpClient.api
+      .post('api/v1/licences', {
         id: formData.get('id'),
         version: formData.get('version'),
         name: formData.get('name'),
@@ -54,11 +56,9 @@ export const Licences = () => {
   };
 
   const deleteLicence = (licenceId) => {
-    api.delete(licenceId).then(() => {
+    httpClient.api.delete(`api/v1/licences/${licenceId}`).then(() => {
       console.log(`Licence avec id ${licenceId} supprimée`);
-      setLicences((prevLicences) =>
-        prevLicences.filter((licence) => licence.id != licenceId),
-      );
+      fetchLicences();
     });
   };
 
@@ -70,14 +70,21 @@ export const Licences = () => {
     <>
       <h1>Licences</h1>
       <div className="m-10 w-4/6 m-auto">
-        <div
-          className="btn btn-outline btn-inf"
-          onClick={() => {
-            updateLicence({ id: 0, version: 0, name: '' });
-          }}
-        >
-          Créer licence
-        </div>
+        {current?.roles.includes('ADMIN') ? (
+          <>
+            <div
+              className="btn btn-outline btn-inf"
+              onClick={() => {
+                updateLicence({ id: 0, version: 0, name: '' });
+              }}
+            >
+              Créer licence
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <table className="table table-zebra border">
           <thead>
             <tr>
@@ -90,26 +97,32 @@ export const Licences = () => {
               <tr key={licence.id}>
                 <td>{licence.id}</td>
                 <td>{licence.name}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      updateLicence(licence);
-                    }}
-                    className="btn btn-warning m-auto"
-                  >
-                    Modifier
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      deleteLicence(licence.id.toString());
-                    }}
-                    className="btn btn-error m-auto"
-                  >
-                    Supprimer
-                  </button>
-                </td>
+                {current?.roles.includes('ADMIN') ? (
+                  <>
+                    <td>
+                      <button
+                        onClick={() => {
+                          updateLicence(licence);
+                        }}
+                        className="btn btn-warning m-auto"
+                      >
+                        Modifier
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          deleteLicence(licence.id);
+                        }}
+                        className="btn btn-error m-auto"
+                      >
+                        Supprimer
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <></>
+                )}
               </tr>
             ))}
           </tbody>

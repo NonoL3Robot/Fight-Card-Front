@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
-import ApiService from '../service/ApiService';
+import { httpClient } from '../services/http.client.js';
 import { useNavigate } from 'react-router-dom';
 import { LicenceCard } from '../LicenceCard';
 
 export const ChooseLicence = ({ choosedLicences, setChoosedLicences }) => {
   const navigate = useNavigate();
-
-  const api = new ApiService('http://localhost:8080/api/v1/licences');
   const [licences, setLicences] = useState([]);
 
+  const fetchLicences = () => {
+    httpClient.api
+      .get('api/v1/licences')
+      .then((response) => setLicences(response?.content || []));
+  };
+
   useEffect(() => {
-    api
-      .get()
-      .then((response) => setLicences(response))
-      .catch((error) => alert(error.message))
-      .finally(() => console.log('GET terminé'));
+    fetchLicences();
   }, []);
 
   const handleClick = (licence) => {
@@ -33,6 +33,7 @@ export const ChooseLicence = ({ choosedLicences, setChoosedLicences }) => {
 
   return (
     <>
+      {console.log(licences)}
       {licences.map((licence) => (
         <div
           key={licence.id}

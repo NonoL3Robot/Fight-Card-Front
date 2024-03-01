@@ -180,7 +180,12 @@ export const Play = ({
           <Slider {...settings}>
             {playerDeck.map((card) => (
               <div key={card.id}>
-                <Card card={card} />
+                <Card
+                  card={card}
+                  licenceName={
+                    licences.find((l) => l.id === card.licenceId).name
+                  }
+                />
               </div>
             ))}
           </Slider>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import ApiService from '../service/ApiService';
+import { httpClient } from '../services/http.client.js';
+import { effect } from '@preact/signals';
 import ReactModal from 'react-modal';
 
 export const Cartes = () => {
-  const api = new ApiService('http://localhost:8080/api/v1/cartes');
   const [cartes, setCartes] = useState([]);
+  const [current, setCurrent] = useState(httpClient.currentUser.value);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [isModalOpen, setisModalOpen] = useState(false);
@@ -18,16 +19,26 @@ export const Cartes = () => {
     licenceId: 0,
   });
 
+  const [licences, setLicences] = useState([]);
+
+  const fetchLicences = () => {
+    httpClient.api
+      .get('api/v1/licences')
+      .then((response) => setLicences(response?.content || []));
+  };
+
   const fetchCartes = () => {
-    api
-      .get()
-      .then((response) => setCartes(response))
-      .catch((error) => alert(error.message))
-      .finally(() => console.log('GET terminé'));
+    httpClient.api
+      .get('api/v1/cartes')
+      .then((response) => setCartes(response?.content || []));
   };
 
   useEffect(() => {
     fetchCartes();
+    fetchLicences();
+    effect(() => {
+      setCurrent(httpClient.currentUser.value);
+    });
   }, []);
 
   // Calculate the index range for the current page
@@ -53,8 +64,8 @@ export const Cartes = () => {
 
     const formData = new FormData(e.target);
 
-    api
-      .post(undefined, {
+    httpClient.api
+      .post('api/v1/cartes', {
         id: formData.get('id'),
         version: formData.get('version'),
         name: formData.get('name'),
@@ -73,11 +84,9 @@ export const Cartes = () => {
   };
 
   const deleteCarte = (carteId) => {
-    api.delete(carteId).then(() => {
+    httpClient.api.delete(`api/v1/cartes/${carteId}`).then(() => {
       console.log(`Carte avec id ${carteId} supprimée`);
-      setCartes((prevCartes) =>
-        prevCartes.filter((carte) => carte.id != carteId),
-      );
+      fetchCartes();
     });
   };
 
@@ -89,23 +98,30 @@ export const Cartes = () => {
     <>
       <h1>Cartes</h1>
       <div className="m-10 w-4/6 m-auto">
-        <div
-          className="btn btn-outline btn-inf"
-          onClick={() => {
-            updateCarte({
-              id: 0,
-              version: 0,
-              name: '',
-              description: '',
-              statCourage: 0,
-              statIntelligence: 0,
-              statForce: 0,
-              licenceId: 0,
-            });
-          }}
-        >
-          Créer carte
-        </div>
+        {current?.roles.includes('ADMIN') ? (
+          <>
+            <div
+              className="btn btn-outline btn-inf"
+              onClick={() => {
+                updateCarte({
+                  id: 0,
+                  version: 0,
+                  name: '',
+                  description: '',
+                  statCourage: 0,
+                  statIntelligence: 0,
+                  statForce: 0,
+                  licenceId: 0,
+                });
+              }}
+            >
+              Créer carte
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <table className="table table-zebra border">
           <thead>
             <tr>
@@ -114,7 +130,7 @@ export const Cartes = () => {
               <th>Stat Courage</th>
               <th>Stat Intelligence</th>
               <th>Stat Force</th>
-              <th>Licence ID</th>
+              <th>Nom Licence</th>
             </tr>
           </thead>
           <tbody>
@@ -125,27 +141,33 @@ export const Cartes = () => {
                 <td>{carte.statCourage}</td>
                 <td>{carte.statIntelligence}</td>
                 <td>{carte.statForce}</td>
-                <td>{carte.licenceId}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      updateCarte(carte);
-                    }}
-                    className="btn btn-warning m-auto"
-                  >
-                    Modifier
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      deleteCarte(carte.id.toString());
-                    }}
-                    className="btn btn-error m-auto"
-                  >
-                    Supprimer
-                  </button>
-                </td>
+                <td>{licences.find((l) => l.id === carte.licenceId).name}</td>
+                {current?.roles.includes('ADMIN') ? (
+                  <>
+                    <td>
+                      <button
+                        onClick={() => {
+                          updateCarte(carte);
+                        }}
+                        className="btn btn-warning m-auto"
+                      >
+                        Modifier
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          deleteCarte(carte.id);
+                        }}
+                        className="btn btn-error m-auto"
+                      >
+                        Supprimer
+                      </button>
+                    </td>
+                  </>
+                ) : (
+                  <></>
+                )}
               </tr>
             ))}
           </tbody>

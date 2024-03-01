@@ -7,6 +7,8 @@ import { ChooseLicence } from './components/pages/ChooseLicence';
 import { useState } from 'react';
 import { Play } from './components/pages/Play';
 import { End } from './components/pages/End';
+import { Login } from './components/pages/Login.jsx';
+import { Register } from './components/pages/Register.jsx';
 
 export const App = () => {
   const [choosedLicences, setChoosedLicences] = useState([]);
@@ -45,6 +47,8 @@ export const App = () => {
           />
           <Route path="/licences" element={<Licences />} />
           <Route path="/cartes" element={<Cartes />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </div>
