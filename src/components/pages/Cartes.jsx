@@ -34,8 +34,8 @@ export const Cartes = () => {
   };
 
   useEffect(() => {
-    fetchCartes();
     fetchLicences();
+    fetchCartes();
     effect(() => {
       setCurrent(httpClient.currentUser.value);
     });
@@ -141,7 +141,7 @@ export const Cartes = () => {
                 <td>{carte.statCourage}</td>
                 <td>{carte.statIntelligence}</td>
                 <td>{carte.statForce}</td>
-                <td>{licences.find((l) => l.id === carte.licenceId).name}</td>
+                <td>{licences.find((l) => l.id === carte.licenceId)?.name}</td>
                 {current?.roles.includes('ADMIN') ? (
                   <>
                     <td>
